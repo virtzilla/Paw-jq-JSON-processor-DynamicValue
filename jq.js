@@ -2,14 +2,18 @@ loadScript("jq-emscripten.js");
 
 (function() {
     var ProcessWithJQ;
-    ProcessWithJQ = function()
-     {
-         var jqOutput = '';
-         this.evaluate = function() {
+    ProcessWithJQ = function() {
+        var jqOutput = '';
+        this.evaluate = function() {
             jq(['-M', this.jqargs, '/data/inputfile'], this.jsonInput, function(jqResult) {
                 jqOutput = jqResult
             });
-            return jqOutput;
+            if (jqOutput.match(/^jq: error:/)) {
+                console.error(jqOutput);
+                return null;
+            } else {
+                return jqOutput;
+            }
         };
         this.title = function() {
             return "jq JSON processor";
