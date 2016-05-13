@@ -2,12 +2,14 @@ loadScript("jq-emscripten.js");
 
 (function() {
     var ProcessWithJQ;
-    ProcessWithJQ = function() {
-        this.evaluate = function() {
-            jq(['-M', this.jqargs, '/data/inputfile'], this.jsonInput, function() {
-                returnOutput()
+    ProcessWithJQ = function()
+     {
+         var jqOutput = '';
+         this.evaluate = function() {
+            jq(['-M', this.jqargs, '/data/inputfile'], this.jsonInput, function(jqResult) {
+                jqOutput = jqResult
             });
-            return output;
+            return jqOutput;
         };
         this.title = function() {
             return "jq JSON processor";
@@ -30,9 +32,3 @@ loadScript("jq-emscripten.js");
     ];
     registerDynamicValueClass(ProcessWithJQ);
 }).call(this);
-
-var output = '';
-
-function returnOutput() {
-    //console.log(output);
-}
