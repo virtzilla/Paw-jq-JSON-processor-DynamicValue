@@ -4,6 +4,9 @@ var ProcessWithJQ = function() {
   var flags = '-M';
 
   this.evaluate = function() {
+    if (this.rawOutput)
+      flags += 'r';
+
     var jqOutput = jq.raw(this.jsonInput, [flags, this.jqargs]);
 
     if (jqOutput === null)
@@ -29,6 +32,7 @@ ProcessWithJQ.title = "jq JSON processor";
 ProcessWithJQ.help = "https://stedolan.github.io/jq/manual/#Basicfilters";
 ProcessWithJQ.inputs = [
   InputField("jqargs", "JQ args", "String", { defaultValue: "." }),
-  InputField("jsonInput", "JSON input", "String", { placeholder: "{\"change me\": \"put your JSON input here\"}" })
+  InputField("jsonInput", "JSON input", "String", { placeholder: "{\"change me\": \"put your JSON input here\"}" }),
+  InputField("rawOutput", "Raw output", "Checkbox", { defaultValue: false })
 ];
 registerDynamicValueClass(ProcessWithJQ);
