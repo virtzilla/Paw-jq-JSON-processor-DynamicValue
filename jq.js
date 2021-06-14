@@ -16,7 +16,7 @@ var ProcessWithJQ = function() {
       console.error(jqOutput);
       return null;
     } else {
-      return jqOutput;
+      return jqOutput.trim();
     }
   };
   this.title = function() {
